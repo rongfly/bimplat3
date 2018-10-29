@@ -1,0 +1,208 @@
+{
+  "data": [
+    {
+      "title": "工作台",
+      "icon": "icon-shouye1",
+      "link": "/"
+    },
+    {
+      "title": "电子沙盘",
+      "icon": "icon-dianzishapan",
+      "children_node": [
+        {
+          "title": "电子沙盘",
+          "icon": "icon-dianzishapan",
+          "link": "/dismantling/landdemolition"
+        },
+        {
+          "title": "电力电缆",
+          "icon": "icon-ERP_zhuyi",
+          "link": "/dismantling/powercable"
+        },
+        {
+          "title": "移动通信",
+          "icon": "icon-ERP_zhuyi",
+          "link": "/dismantling/mobilecommunication"
+        }
+      ]
+    },
+    {
+      "title": "设计管理",
+      "icon": "icon-sheji2",
+      "children_node": [
+        {
+          "title": "设计管理",
+          "link": "/design/designmanagement"
+        },
+        {
+          "title": "变更清单",
+          "link": "/design/changelist"
+        },
+        {
+          "title": "变更台帐",
+          "link": "/design/changeaccount"
+        }
+      ]
+    },
+    {
+      "title": "进度管理",
+      "icon": "icon-jindu1",
+      "children_node": [
+        {
+          "title": "施工进度模拟",
+          "link": "/rate/ratesimulation"
+        },
+        {
+          "title": "施工进度分析",
+          "link": "/rate/rateanalysis"
+        },
+        {
+          "title": "施工产值计划",
+          "link": "/rate/rateplan"
+        },
+        {
+          "title": "产值计划报表",
+          "link": "/rate/ratereportform"
+        },
+        {
+          "title": "产值计划分析",
+          "link": "/rate/rateplananalysis"
+        }
+      ]
+    },
+    {
+      "title": "安全管理",
+      "icon": "icon-anquanzuoyeguanli",
+      "children_node": [
+        {
+          "title": "巡查排检",
+          "link": "/safe/safeinspection"
+        },
+        {
+          "title": "安全预警",
+          "link": "/safe/safewarning"
+        },
+        {
+          "title": "专项方案",
+          "link": "/safe/specialprogram"
+        },
+        {
+          "title": "技术交底",
+          "link": "/safe/technicalbasis"
+        },
+        {
+          "title": "现场监控",
+          "link": "/safe/fieldmonitoring"
+        },
+        {
+          "title": "应急管理",
+          "children_node": [
+            {
+              "title": "应急预案",
+              "link": "/safe/contingencymanagement/emergencyplan"
+            },
+            {
+              "title": "预案演练",
+              "link": "/safe/contingencymanagement/preplandrill"
+            },
+            {
+              "title": "事故报告",
+              "link": "/safe/contingencymanagement/accidentreport"
+            },
+            {
+              "title": "处置方案",
+              "link": "/safe/contingencymanagement/disposalscheme"
+            }
+          ]
+        },
+        {
+          "title": "特种设备",
+          "link": "/safe/specialequipment"
+        },
+        {
+          "title": "现场防护",
+          "link": "/safe/fieldprotection"
+        },
+        {
+          "title": "安全费用",
+          "link": "/safe/safetycost"
+        },
+        {
+          "title": "生产条件",
+          "link": "/safe/productionconditions"
+        },
+        {
+          "title": "安全标准",
+          "link": "/safe/safetyrule"
+        }
+      ]
+    },
+    {
+      "title": "质量管理",
+      "icon": "icon-zhiliang",
+      "children_node": [
+        {
+          "title": "验收评定",
+          "link": "/quality/acceptanceassessment"
+        },
+        {
+          "title": "工艺质量",
+          "link": "/quality/processquality"
+        }
+      ]
+    },
+    {
+      "title": "组织人员",
+      "icon": "icon-renyuanguanli2",
+      "children_node": [
+        {
+          "title": "组织",
+          "link": "/quality/acceptanceassessment"
+        },
+        {
+          "title": "人员",
+          "link": "/quality/processquality"
+        }
+      ]
+    },
+    {
+      "title": "主材管理",
+      "icon": "icon-jiancai",
+      "children_node": [
+        {
+          "title": "组织",
+          "link": "/quality/acceptanceassessment"
+        },
+        {
+          "title": "人员",
+          "link": "/quality/processquality"
+        }
+      ]
+    },
+    {
+      "title": "系统配置",
+      "icon": "icon-xitongshezhi",
+      "children_node": [
+        {
+          "title": "后台",
+          "link": "/setting/backstage"
+        },
+        {
+          "title": "基础数据",
+          "link": "/setting/basicdata"
+        },
+        {
+          "title": "征拆管理1",
+          "icon": "icon-zhengchaiguanli",
+          "link": "/construction/landdemo1"
+        },
+        {
+          "title": "安全形势走势图",
+          "icon": "icon-tongjitubiaox",
+          "link": "/construction/safechart"
+        }
+      ]
+    }
+  ]
+}
+

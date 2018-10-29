@@ -1,0 +1,544 @@
+<template>
+  <div>
+    <div class="tree u_scrollBar">
+      <div class="tree-aside">
+        <el-select v-model="value" placeholder="请选择" style="width: 100%;margin-bottom: 20px" @change="change(value)">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+        <el-tree class="teamtree"
+                 :props="defaultProps"
+                 :load="loadElement"
+                 lazy
+                 empty-text="数据为空"
+                 :expand-on-click-node="false"
+                 :highlight-current="true"
+                 @node-click="handleNodeClick">
+        </el-tree>
+      </div>
+      <div class="tree-list">
+        <div class="tree-list-do">
+          <div>
+            <el-input placeholder="请输入内容" v-model="input3" style="width: 300px">
+              <template slot="prepend">检查点：</template>
+            </el-input>
+            <el-button type="primary" icon="el-icon-search">搜索</el-button>
+          </div>
+          <div>
+            <el-button type="primary" icon="el-icon-plus">添加协作</el-button>
+            <el-button type="primary" icon="el-icon-upload">导入</el-button>
+          </div>
+        </div>
+        <div class="element_area">
+          <div class="element_area_box">
+            <p class="element_name">{{elementdetail.o_projecttaskdesc}}</p>
+            <p class="element_name">{{elementdetail.o_projecttaskname}}</p>
+            <img :src="elementdetail.img" alt="" class="element_qr">
+            <p class="element_name">{{elementdetail.o_status}}</p>
+            <div class="block">
+              <span>位置：</span>
+              <span>{{elementdetail.o_projecttaskname}}</span>
+            </div>
+            <div class="block">
+              <span>进度：</span>
+              <span>{{elementdetail.o_progress}}</span>
+            </div>
+          </div>
+        </div>
+        <el-table
+          :data="editData"
+          style="width: 100%"
+          :row-class-name="tableRowClassName"
+          class="box-shadow">
+          <el-table-column
+            label="标题"
+            width="180">
+            <template slot-scope="scope">
+              <span>{{ scope.row.xz_title }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="位置"
+            width="180">
+            <template slot-scope="scope">
+              <span>{{ scope.row.xz_bimelem }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="创建人">
+            <template slot-scope="scope">
+              <p>{{ scope.row.xz_createrName }}</p>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="创建时间">
+            <template slot-scope="scope">
+              <p>{{ scope.row.xz_createtime }}</p>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="是否已读">
+            <template slot-scope="scope">
+              <p>{{ scope.row.xz_status|yidu }}</p>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" width="180">
+            <template slot-scope="scope">
+              <el-button
+                size="mini"
+                @click="handleEdit(scope.$index, scope.row)">编辑
+              </el-button>
+              <el-button
+                size="mini"
+                type="primary"
+                @click="handleKan(scope.$index, scope.row.id)">查看
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+    </div>
+
+    <!-- Form -->
+
+    <el-dialog title="编辑协作" :visible.sync="editFlag" custom-class="dialog u_scrollBar" :before-close="handleClose">
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="路段" prop="xz_bimelem">
+          <el-input v-model="ruleForm.xz_bimelem"></el-input>
+        </el-form-item>
+        <el-form-item label="路段ID" prop="xz_bimelemid">
+          <el-input v-model="ruleForm.xz_bimelemid"></el-input>
+        </el-form-item>
+        <!--<el-form-item label="创建人ID" prop="xz_createrId">-->
+        <!--<el-input v-model="ruleForm.xz_createrId"></el-input>-->
+        <!--</el-form-item>-->
+        <!--<el-form-item label="创建人姓名" prop="xz_createrName">-->
+        <!--<el-input v-model="ruleForm.xz_createrName"></el-input>-->
+        <!--</el-form-item>-->
+        <el-form-item label="创建时间" prop="xz_createtime">
+          <el-date-picker
+            v-model="ruleForm.xz_createtime"
+            type="date"
+            placeholder="选择日期">
+          </el-date-picker>
+          <el-time-picker
+            v-model="ruleForm.xz_createtime"
+            placeholder="任意时间点">
+          </el-time-picker>
+        </el-form-item>
+        <el-form-item label="截至时间" prop="xz_deadline">
+          <el-date-picker
+            v-model="ruleForm.xz_deadline"
+            type="date"
+            placeholder="选择日期">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="问题标识" prop="xz_label">
+          <el-select v-model="ruleForm.xz_label" placeholder="请选择标识">
+            <el-option label="环保问题" value="环保问题"></el-option>
+            <el-option label="安全问题" value="安全问题"></el-option>
+            <el-option label="质量问题" value="质量问题"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="问题优先级" prop="xz_level">
+          <el-select v-model="ruleForm.xz_level" placeholder="请选择级别">
+            <el-option label="一级" value="一级"></el-option>
+            <el-option label="二级" value="二级"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="是否已读" prop="xz_status">
+          <el-select v-model="ruleForm.xz_status" placeholder="请选择是否已读">
+            <el-option label="未读" value="0"></el-option>
+            <el-option label="已读" value="1"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="handleClose">取 消</el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')">确 定</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog title="问题详情" :visible.sync="kanFlag" custom-class="dialog u_scrollBar">
+      <el-form :model="kanData" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="创建人">
+          <el-tooltip placement="right"
+                      boundariesElement='demo-ruleForm'
+                      gpuAcceleration=false>
+            <div slot="content">
+              <p>{{kanData.creater_name}}</p>
+              <p>{{kanData.creater_job}}</p>
+            </div>
+            <img v-if="kanData.creater_headimage!=''" :src="kanData.creater_headimage" alt=""
+                 class="name_list_avatar">
+            <img v-else src="@/assets/img/avatar.png" alt="" class="name_list_avatar">
+          </el-tooltip>
+        </el-form-item>
+        <el-form-item label="责任人">
+          <el-tooltip placement="right"
+                      boundariesElement='demo-ruleForm'
+                      gpuAcceleration=false>
+            <div slot="content">
+              <p>{{kanData.responsible_name}}</p>
+              <p>{{kanData.responsible_job}}</p>
+            </div>
+            <img v-if="kanData.responsible_headimage!=''" :src="kanData.responsible_headimage"
+                 alt=""
+                 class="name_list_avatar">
+            <img v-else src="@/assets/img/avatar.png" alt="" class="name_list_avatar">
+          </el-tooltip>
+        </el-form-item>
+        <el-form-item label="协作调整文字">
+          <div>{{kanData.xz_auditContent}}</div>
+        </el-form-item>
+        <el-form-item label="协作调整时间">
+          <el-date-picker
+            v-model="kanData.xz_audit_time"
+            type="datetime"
+            placeholder="选择日期时间"
+            readonly>
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="调整图片">
+          <img :src="'http://123.56.150.174/'+kanData.xz_auditimgs" alt="" class="avatar">
+        </el-form-item>
+        <el-form-item label="调整图片">
+          <div class="imgbox" v-if="kanData.xz_auditimgs!=undefined">
+            <div class="img" v-for="(p,index) in imgToArray2(kanData.xz_auditimgs)" :key='index'>
+              <img class="preview-img" :src="p.src" @click="$preview.open(index, imgToArray2(kanData.xz_auditimgs))"
+                   width="150"
+                   height="150">
+            </div>
+          </div>
+        </el-form-item>
+        <el-form-item label="关联的构件">
+          <div>{{kanData.xz_bimelem}}</div>
+        </el-form-item>
+        <el-form-item label="协作的描述">
+          <div>{{kanData.xz_content}}</div>
+        </el-form-item>
+        <el-form-item label="创建时间">
+          <el-date-picker
+            v-model="kanData.xz_createtime"
+            type="datetime"
+            placeholder="选择时间"
+            readonly>
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="协作解决期限">
+          <el-date-picker
+            v-model="kanData.xz_deadline"
+            type="date"
+            placeholder="选择日期"
+            readonly>
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="协作的图片">
+          <div class="imgbox" v-if="kanData.xz_images!=undefined">
+            <div class="img" v-for="(p,index) in imgToArray1(kanData.xz_images)" :key='index'>
+              <img class="preview-img" :src="p.src" @click="$preview.open(index, imgToArray1(kanData.xz_images))"
+                   width="150"
+                   height="150">
+            </div>
+          </div>
+        </el-form-item>
+        <el-form-item label="协作的标识">
+          <div>{{kanData.xz_label}}</div>
+        </el-form-item>
+        <el-form-item label="优先级">
+          <div>{{kanData.xz_level}}</div>
+        </el-form-item>
+        <el-form-item label="协作状态">
+          <div>{{kanData.xz_status|yidu}}</div>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="kanFlag = false">关 闭</el-button>
+      </div>
+    </el-dialog>
+  </div>
+</template>
+<script>
+
+  export default {
+    name: 'anquan',
+    data () {
+      return {
+        elementList: [],
+        defaultProps: {
+          label: 'o_projecttaskdesc',
+          children: 'o_projecttaskno',
+        },
+        count: 1,
+        editData: [],
+        kanData: {},
+        options: [
+          {
+            value: 0,
+            label: '黄金糕'
+          }, {
+            value: 1,
+            label: '双皮奶'
+          }, {
+            value: 2,
+            label: '蚵仔煎'
+          }, {
+            value: 3,
+            label: '龙须面'
+          }, {
+            value: 4,
+            label: '北京烤鸭'
+          }],
+        value: '',
+        input3: 12,
+        editFlag: false,
+        kanFlag: false,
+        ruleForm: {},
+        rules: {
+          name: [
+            {required: true, message: '请输入活动名称', trigger: 'blur'},
+            {min: 3, max: 10, message: '长度在 3 到 5 个字符', trigger: 'blur'}
+          ],
+          region: [
+            {required: true, message: '请选择活动区域', trigger: 'change'}
+          ],
+          date1: [
+            {type: 'date', required: true, message: '请选择日期', trigger: 'change'}
+          ],
+          date2: [
+            {type: 'date', required: true, message: '请选择时间', trigger: 'change'}
+          ],
+          type: [
+            {type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change'}
+          ],
+          resource: [
+            {required: true, message: '请选择活动资源', trigger: 'change'}
+          ],
+          desc: [
+            {required: true, message: '请填写活动形式', trigger: 'blur'}
+          ]
+        },
+        elementdetail:{
+          img:""
+        }
+      }
+    },
+    mounted () {
+      this.ListZx(1, 10, 0)
+    },
+    methods: {
+      handleClose(done) {
+        console.log(1);
+        done();
+      },
+      tableRowClassName ({row, rowIndex}) {
+        if (row.xz_status == 0) {
+          return 'warning-bg'
+        } else if (row.xz_status == 1) {
+          return 'success-bg'
+        }
+        return ''
+      },
+      handleKan (index, id) {
+        console.log(id)
+        var that = this
+        that.kanFlag = true
+        var data = {
+          id: id
+        }
+        return that.request.getDetails(data).then(function (response) {
+            console.log(response)
+            that.kanData = response
+          })
+          .catch(function (error) {
+            that.fetchError = error
+          })
+      },
+      submitForm (formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            alert('submit!')
+            this.editFlag = false
+          } else {
+            console.log('error submit!!')
+            return false
+          }
+        })
+      },
+      ListZx (pageNum, pageSize, status) {
+        var that = this
+        var data = {pageNum: pageNum, pageSize: pageSize, status: status}
+        return that.request.list(data).then(function (response) {
+            console.log(response)
+            that.editData = response.content.list
+          })
+          .catch(function (error) {
+            that.fetchError = error
+          })
+      },
+      change (value) {
+        console.log(value)
+      },
+      handleEdit (index, row) {
+        console.log(index, row)
+        this.editFlag = true
+        this.ruleForm = row
+        console.log(this.ruleForm)
+
+      },
+      handleDelete (index, rows) {
+        console.log(index, rows)
+        rows.splice(index, 1)
+      },
+      handleNodeClick (data) {
+        console.log(data)
+        var that = this
+        if (data.o_projecttaskno != 0) {
+          var prm = {nodeid: data.o_projecttaskno}
+          that.request.getDetailByid(prm).then(function (response) {
+              console.log(response)
+              that.elementdetail = response.content
+              that.elementdetail.img = response.content.qrcode.QR_IMG
+            })
+            .catch(function (error) {
+              that.fetchError = error
+            })
+        }
+        else {
+          var that = this
+          var prm = {content: data.o_projecttaskno}
+          that.request.getQrcode(prm).then(function (response) {
+              console.log(response)
+              that.elementdetail.o_projecttaskdesc = data.o_projecttaskdesc
+              that.elementdetail.img = response.content.QR_IMG
+            })
+            .catch(function (error) {
+              that.fetchError = error
+            })
+        }
+      },
+      imgToArray1 (str) {
+        if (str != '') {
+          var arr = str.replace(/\s/g, '').split(',')
+          let newArr = []
+          for (var i = 0; i < arr.length; i++) {
+            newArr.push({w: '1080', h: '810', src: 'http://123.56.7.142/bimplatform/v1/api/coopes/' + arr[i]})
+          }
+          return newArr
+        } else {
+          return
+        }
+      },
+      imgToArray2 (str) {
+        if (str != '') {
+          var arr = str.replace(/\s/g, '').split(',')
+          let newArr = []
+          for (var i = 0; i < arr.length; i++) {
+            newArr.push({w: '1080', h: '810', src: 'http://123.56.7.142' + arr[i]})
+          }
+          return newArr
+        } else {
+          return
+        }
+      },
+      getsubList (nodeid) {
+        var that = this
+        var data = {nodeid: nodeid}
+        return that.request.getsubList(data).then(function (response) {
+            console.log(response)
+            that.elementList = response.content
+          })
+          .catch(function (error) {
+            that.fetchError = error
+          })
+      },
+
+      loadElement (node, resolve) {
+        var that = this
+        if (node.level === 0) {
+          var data = {nodeid: 0}
+          return that.request.getsubList(data).then(function (response) {
+              console.log(response)
+              return resolve(response.content)
+            })
+            .catch(function (error) {
+              that.fetchError = error
+            })
+          // var defulf = {o_projecttaskdesc: '德上高速', o_projecttaskno: 0}
+          // that.handleNodeClick(defulf)
+          // return resolve([defulf])
+        }
+        if (node.level >= 1) {
+          var data = {nodeid: node.data.o_projecttaskno}
+          return that.request.getsubList(data).then(function (response) {
+              return resolve(response.content)
+            })
+            .catch(function (error) {
+              that.fetchError = error
+            })
+        }
+      }
+    }
+  }
+</script>
+<style lang="scss" scoped>
+  .tree {
+    display: flex;
+    .tree-aside {
+      width: 220px;
+      margin: 5px;
+      min-width: 220px;
+      height: 100%;
+    }
+    .tree-list {
+      width: calc(100% - 230px);
+      margin: 5px;
+      .tree-list-do {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+    }
+  }
+
+  .box-shadow {
+    box-shadow: 0 0 2px 1px #DFF4FC;
+  }
+
+  .imgbox {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .imgbox .img {
+    margin-right: 5px;
+    margin-bottom: 5px;
+    width: 150px;
+    height: 150px;
+    box-sizing: border-box;
+  }
+
+  .element_qr {
+    width: 150px;
+    height: 150px;
+  }
+
+  .element_name {
+    height: 30px;
+    line-height: 30px;
+  }
+
+  .name_list_avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  .element_area {
+    display: flex;
+  }
+</style>

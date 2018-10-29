@@ -1,0 +1,78 @@
+{
+  "data": [
+    {
+      "title": "项目总览",
+      "icon": "icon-xiangmuzonglan",
+      "link": "/construction"
+    },
+    {
+      "title": "行政办公",
+      "icon": "icon-hangzhengbangong",
+      "link": "/construction/officeadmin"
+    },
+    {
+      "title": "征拆管理",
+      "icon": "icon-zhengchaiguanli",
+      "children_node": [
+        {
+          "title": "电力电缆",
+          "link": "/construction/landdemo2"
+        },
+        {
+          "title": "移动通信",
+          "link": "/construction/landdemo3"
+        }
+      ]
+    },
+    {
+      "title": "技术管理",
+      "icon": "icon-jishuyukejichuangxinguanli",
+      "link": "/construction/technology"
+    },
+    {
+      "title": "进度管理",
+      "icon": "icon-jinduguanli",
+      "link": "/construction/ratemanage"
+    },
+    {
+      "title": "质量管理",
+      "icon": "icon-zhiliangguanli",
+      "link": "/construction/qualitymanage"
+    },
+    {
+      "title": "安全管理",
+      "icon": "icon-anquanguanli",
+      "children_node": [
+        {
+          "title": "问题整改",
+          "icon": "icon-tongjibiao",
+          "link": "/construction/safemanage"
+        },
+        {
+          "title": "安全形势走势图",
+          "icon": "icon-tongjitubiaox",
+          "link": "/construction/safechart"
+        }
+      ]
+    },
+    {
+      "title": "人员管理",
+      "icon": "icon-renyuanguanli2",
+      "link": "/construction/adminsystem"
+    },
+    {
+      "title": "系统配置",
+      "icon": "icon-xitongshezhi",
+      "children_node": [
+        {
+          "title": "后台",
+          "link": "/construction/systemset"
+        },
+        {
+          "title": "基础数据",
+          "link": "/construction/systemdata"
+        }
+      ]
+    }
+  ]
+}
