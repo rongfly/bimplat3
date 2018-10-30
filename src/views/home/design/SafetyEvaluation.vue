@@ -7,10 +7,11 @@
       <h3>云南都香高速公路安全性评价</h3>
         <div class="item">
           <div class="player">
-            <video-player class="vjs-custom-skin"
-                          :options="playerOptions"
-                          :playsinline="true"
-                          @ready="playerReadied($event)"></video-player>
+            <video :src="src"></video>
+            <!--<video-player class="vjs-custom-skin"-->
+                          <!--:options="playerOptions"-->
+                          <!--:playsinline="true"-->
+                          <!--@ready="playerReadied($event)"></video-player>-->
           </div>
         </div>
     </div>
@@ -44,7 +45,8 @@
             src: "http://7xkwa7.media1.z0.glb.clouddn.com/sample_video_L"
           }],
           poster: "https://surmon-china.github.io/vue-quill-editor/static/images/surmon-3.jpg",
-        }
+        },
+        src: "http://7xkwa7.media1.z0.glb.clouddn.com/sample_video_L"
       }
     },
     methods: {

@@ -1,10 +1,25 @@
 import Vue from 'vue'
-import './plugins/axios'
+// import '@/plugins/axios'
 import App from './App.vue'
-import router from './router'
+import router from './router/router'
 import store from '@/store/store'
-import './plugins/element.js'
+import '@/plugins/element.js'
 import '@/assets/css/main.css'
+
+// 全局注册筛选器
+import * as filters from './filters' // global filters
+// register global utility filters.
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
+
+import * as directive from '@/directive/formValidation'
+Vue.use(directive)
+
+import request from '@/api/request'
+Vue.prototype.request = request
+
+import './permission' // permission control
 
 Vue.config.productionTip = false
 

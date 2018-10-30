@@ -77,8 +77,8 @@ export default {
   getsubList (data) {
     return axios({
       url: api.getsub_list,
-      method: 'post',
-      data: qs.stringify(data)
+      method: 'get',
+      params: data
     })
   },
   // 获取组织机构

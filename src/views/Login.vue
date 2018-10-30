@@ -41,7 +41,7 @@
     data () {
       return {
         username: 'lzz',
-        password: 'admin',
+        password: 'admin123',
         passwordType:'password',
         showpw:false,
       }

@@ -7,11 +7,11 @@ import axios from "axios";
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-
+console.log(process.env.apiUrl)
 let config = {
-  // baseURL: process.env.baseURL || process.env.apiUrl || ""
-  // timeout: 60 * 1000, // Timeout
-  // withCredentials: true, // Check cross-site Access-Control
+  baseURL: process.env.baseURL || process.env.apiUrl || "",
+  timeout: 60 * 1000, // Timeout
+  withCredentials: true, // Check cross-site Access-Control
 };
 
 const _axios = axios.create(config);

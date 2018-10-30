@@ -4,6 +4,9 @@
       <div v-show="$store.state.headShow">
         <div class="bheader">
           <Logo/>
+          <div class="block">
+            <el-color-picker v-model="themecolor" size="mini" @active-change="activeChange" @change="change"></el-color-picker>
+          </div>
           <div class="login">
             <div class="mune">
               <router-link :to="tab.path" v-for="(tab,index) in tabs" :key="index">
@@ -45,7 +48,9 @@
             path: '/construction',
             name: '施工管理'
           }
-        ]
+        ],
+        themecolor: '#409EFF',
+        activeColor: ''
       }
     },
     components: {
@@ -68,22 +73,16 @@
           this.$store.state.linkList = [{icon: 'icon-xiangmuzonglan', link: '/construction', title: '项目总览'}]
         }
       },
-      setCur: function (index) {
-        // this.datas.map(function (v,i) {
-        //   i==index? v.iscur=true: v.iscur=false;
-        // });
-        for (var i = 0; i < this.datas.length; i++) {
-          if (index == this.datas[i].idcur) {
-            this.datas[i].iscur = true
-          } else {
-            this.datas[i].iscur = false
-          }
-        }
-      },
       logout () {
         this.$store.dispatch('FedLogOut').then(() => {
           location.reload()// In order to re-instantiate the vue-router object to avoid bugs
         })
+      },
+      activeChange(val){
+        this.activeColor=val
+      },
+      change(val){
+        this.themecolor=val
       }
     }
   }

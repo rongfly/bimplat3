@@ -4,6 +4,7 @@ import store from '@/store/store'
 import { getToken } from '@/utils/cookies'
 
 // create an axios instance
+console.log(process.env)
 const http = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
   timeout: 10000 // request timeout
@@ -39,9 +40,10 @@ http.interceptors.response.use(
    */
   response => {
     const res = response.data
-    if (res.code !== 100&&res.code !== undefined) {
+    console.log(res)
+    if (res.code !== 100 && res.code !== undefined) {
       Message({
-        message: res.content,
+        message: res.message,
         type: 'error',
         duration: 5 * 1000
       })
@@ -61,7 +63,7 @@ http.interceptors.response.use(
       //   })
       // }
       return Promise.reject('error')
-    }else {
+    } else {
       return response.data
     }
   },
@@ -81,13 +83,27 @@ http.interceptors.response.use(
           location.reload() // 为了重新实例化vue-router对象 避免bug
         })
       })
-    }else{
-      console.log('err' + error) // for debug
-      Message({
-        message: error.response.data.content,
-        type: 'error',
-        duration: 5 * 1000
-      })
+    }else if(error.response.status===404) {
+      if (error.response.data.code === -1001) {
+        Message({
+          message: error.response.data.message,
+          type: 'error',
+          duration: 5 * 1000
+        })}else{
+        Message({
+          message: '错误的网络请求',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      }
+    }
+    else {
+        console.log('err' + error) // for debug
+        Message({
+          message: error.response.data.content,
+          type: 'error',
+          duration: 5 * 1000
+        })
     }
     return Promise.resolve(error.response)
   }
