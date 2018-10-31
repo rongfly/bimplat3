@@ -6,7 +6,7 @@ import { getToken } from '@/utils/cookies'
 // create an axios instance
 console.log(process.env)
 const http = axios.create({
-  baseURL: process.env.BASE_API, // api的base_url
+  baseURL: 'http://123.56.7.142', // api的base_url
   timeout: 10000 // request timeout
 })
 

@@ -19,8 +19,6 @@ const whiteList = ['/login', '/authredirect', "/regist"]// no redirect whitelist
 router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title
-  }else{
-    document.title="基于BIM的设计施工精益管理平台"
   }
   NProgress.start() // start progress bar
   if (getToken()) { // determine if there has token

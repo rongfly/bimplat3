@@ -163,6 +163,14 @@ const router = new Router({
       name: 'login',
       component: () => import('../views/Login.vue')
     },
+    {
+      path: '/regist',
+      name: 'regist',
+      component: () => import('../views/Regist.vue'),
+      meta: {
+        title: "注册"
+      }
+    },
   ]
 })
 export default router
