@@ -61,4 +61,8 @@ a.router-link-exact-active {
 .el-tabs__item {
   height: 100px;
 }
+  .line{
+    width: 1200px;
+    margin: 0 auto;
+  }
 </style>

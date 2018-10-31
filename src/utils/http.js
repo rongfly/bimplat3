@@ -83,27 +83,34 @@ http.interceptors.response.use(
           location.reload() // 为了重新实例化vue-router对象 避免bug
         })
       })
-    }else if(error.response.status===404) {
+    } else if (error.response.status === 404) {
       if (error.response.data.code === -1001) {
         Message({
           message: error.response.data.message,
           type: 'error',
           duration: 5 * 1000
-        })}else{
+        })
+      } else {
         Message({
           message: '错误的网络请求',
           type: 'error',
           duration: 5 * 1000
         })
       }
+    } else if (error.response.status === 500) {
+      Message({
+        message: '错误的网络请求',
+        type: 'error',
+        duration: 5 * 1000
+      })
     }
     else {
-        console.log('err' + error) // for debug
-        Message({
-          message: error.response.data.content,
-          type: 'error',
-          duration: 5 * 1000
-        })
+      console.log('err' + error) // for debug
+      Message({
+        message: error.response.data.content,
+        type: 'error',
+        duration: 5 * 1000
+      })
     }
     return Promise.resolve(error.response)
   }

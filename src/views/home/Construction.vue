@@ -53,7 +53,12 @@
     },
     created () {
       console.log(menu.data)
-      this.$store.state.linkList = [valueObj(this.$route.path, menu.data)]
+      if(this.$route.path.indexOf("/construction/officeadmin/") != -1 ){
+        console.log(1)
+        this.$router.push({path: "/construction/officeadmin"});
+      }else{
+        this.$store.state.linkList = [valueObj(this.$route.path, menu.data)]
+      }
       console.log(this.$route.path)
       console.log(this.$store.state.linkList)
     },

@@ -2,7 +2,33 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 Vue.use(Router)
-
+const officeadmin = [
+  {
+    path: '',
+    name: 'menu_list1',
+    component: () => import('../views/home/constructionctrl/officeadmin/OA_workspace.vue'),
+  },
+  {
+    path: 'menu_list2',
+    name: 'menu_list2',
+    component: () => import('../views/home/constructionctrl/officeadmin/OA_menu_list2.vue'),
+  },
+  {
+    path: 'menu_list3',
+    name: 'menu_list3',
+    component: () => import('../views/home/constructionctrl/officeadmin/OA_menu_list3.vue'),
+  },
+  {
+    path: 'menu_list4',
+    name: 'menu_list4',
+    component: () => import('../views/home/constructionctrl/officeadmin/OA_menu_list4.vue'),
+  },
+  {
+    path: 'menu_list5',
+    name: 'menu_list5',
+    component: () => import('../views/home/constructionctrl/officeadmin/OA_menu_list5.vue'),
+  },
+]
 const constructionList = [
   {
     path: '',
@@ -11,9 +37,10 @@ const constructionList = [
   },
   {
     path: 'officeadmin',
-    name: 'officeadmin',
-    component: () => import('../views/home/constructionctrl/OfficeAdmin.vue'),
-    hidden: true
+    component: () => import('../views/home/constructionctrl/officeadmin/OfficeAdmin.vue'),
+    children: [
+      ...officeadmin
+    ]
   },
   {
     path: 'landdemo1',
@@ -83,41 +110,41 @@ const designList = [
     name: 'collaborationsystem',
     component: () => import('../views/home/design/CollaborationSystem.vue'),
   },
-    {
-      path: 'designmodel',
-      name: 'designmodel',
-      component: () => import('../views/home/design/DesignModel.vue'),
+  {
+    path: 'designmodel',
+    name: 'designmodel',
+    component: () => import('../views/home/design/DesignModel.vue'),
+  },
+  {
+    path: 'aidimensional',
+    name: 'aidimensional',
+    component: () => import('../views/home/design/AiDimensional.vue'),
+  },
+  {
+    path: 'safetyevaluation',
+    name: 'safetyevaluation',
+    component: () => import('../views/home/design/SafetyEvaluation.vue'),
+  },
+  {
+    path: 'codingsystem',
+    name: 'codingsystem',
+    component: () => import('../views/home/design/CodingSystem.vue'),
+  },
+  {
+    path: 'achimanagement',
+    component: () => import('../views/home/design/AchiManagement.vue'),
+    children: [{
+      path: '',
+      name: 'drawing',
+      component: () => import('../views/home/design/datactrl/Drawing.vue'),
     },
-    {
-      path: 'aidimensional',
-      name: 'aidimensional',
-      component: () => import('../views/home/design/AiDimensional.vue'),
-    },
-    {
-      path: 'safetyevaluation',
-      name: 'safetyevaluation',
-      component: () => import('../views/home/design/SafetyEvaluation.vue'),
-    },
-    {
-      path: 'codingsystem',
-      name: 'codingsystem',
-      component: () => import('../views/home/design/CodingSystem.vue'),
-    },
-    {
-      path: 'achimanagement',
-      component: () => import('../views/home/design/AchiManagement.vue'),
-      children: [{
-        path: '',
-        name: 'drawing',
-        component: () => import('../views/home/design/datactrl/Drawing.vue'),
-      },
-        {
-          path: 'manual',
-          name: 'manual',
-          component: () => import('../views/home/design/datactrl/Manual.vue'),
-        }
-      ]
-}
+      {
+        path: 'manual',
+        name: 'manual',
+        component: () => import('../views/home/design/datactrl/Manual.vue'),
+      }
+    ]
+  }
 ]
 
 const mainList = [
@@ -168,7 +195,7 @@ const router = new Router({
       name: 'regist',
       component: () => import('../views/Regist.vue'),
       meta: {
-        title: "注册"
+        title: '注册'
       }
     },
   ]
