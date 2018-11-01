@@ -2,12 +2,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import getters from './getters'
 import user from './modules/user'
+import tools from './modules/tools'
 Vue.use(Vuex)
 //数据附着在state
 const state = {
   headShow:true,
-  token:'',
-  linkList:[]
+  linkList:[],
 }
 
 const store = new Vuex.Store({
@@ -15,6 +15,7 @@ const store = new Vuex.Store({
   getters,
   modules: {
     user,
+    tools,
   },
 })
 console.log(module.hot)
@@ -27,6 +28,7 @@ if (module.hot) {
       getters: require('./getters').default,
       modules: {
         user: require('./modules/user').default,
+        tools: require('./modules/tools').default,
       }
     })
   })

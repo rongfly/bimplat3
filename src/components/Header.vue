@@ -5,22 +5,38 @@
         <div class="bheader">
           <Logo/>
           <div class="block">
-            <el-color-picker v-model="themecolor" size="mini" @active-change="activeChange" @change="change"></el-color-picker>
+            <el-color-picker
+              v-model="themecolor"
+              size="mini"
+              @active-change="activeChange"
+              @change="change"
+            ></el-color-picker>
           </div>
           <div class="login">
             <div class="mune">
               <router-link :to="tab.path" v-for="(tab,index) in tabs" :key="index">
-                <div class="headerbox" @click="activeClick(index)" :class="{active:activePath===index}">{{tab.name}}
-                </div>
+                <div
+                  class="headerbox"
+                  @click="activeClick(index)"
+                  :class="{active:activePath===index}"
+                >{{tab.name}}</div>
               </router-link>
             </div>
+            <el-badge :is-dot="isbell" class="rightbell">
+              <el-button style="padding:0;width:100%;height:100%" type="primary" @click="showSide">
+                <i class="el-icon-bell" style="font-size:28px"></i>
+              </el-button>
+            </el-badge>
             <router-link to="/userinfo">
-              <img v-if="$store.state.user.userInfo.avatar" :src="$store.state.user.userInfo.avatar" alt="" class="avatar">
+              <img
+                v-if="$store.state.user.userInfo.avatar"
+                :src="$store.state.user.userInfo.avatar"
+                alt=""
+                class="avatar"
+              >
               <img v-else src="@/assets/img/avatar.png" alt="" class="avatar">
             </router-link>
-            <div class="headerbox" @click="logout">
-              退出
-            </div>
+            <div class="headerbox" @click="logout">退出</div>
           </div>
         </div>
       </div>
@@ -28,130 +44,146 @@
   </div>
 </template>
 <script>
-  import Logo from '@/components/Logo'
+import Logo from "@/components/Logo";
 
-  export default {
-    name: 'bheader',
-    data () {
-      return {
-        activePath: '',
-        tabs: [
-          {
-            path: '/',
-            name: '项目主页'
-          },
-          {
-            path: '/design',
-            name: '设计管理'
-          },
-          {
-            path: '/construction',
-            name: '施工管理'
-          }
-        ],
-        themecolor: '#409EFF',
-        activeColor: ''
-      }
-    },
-    components: {
-      Logo,
-    },
-    created () {
-      var path = this.$route.path.split('/')[1]
-      if (path == '') {
-        this.activePath = 0
-      } else if (path == 'design') {
-        this.activePath = 1
-      } else {
-        this.activePath = 2
-      }
-    },
-    methods: {
-      activeClick (index) {
-        this.activePath = index
-        if (index == 2) {
-          this.$store.state.linkList = [{icon: 'icon-xiangmuzonglan', link: '/construction', title: '项目总览'}]
+export default {
+  name: "bheader",
+  data() {
+    return {
+      isbell: false,
+      activePath: "",
+      tabs: [
+        {
+          path: "/",
+          name: "项目主页"
+        },
+        {
+          path: "/design",
+          name: "设计管理"
+        },
+        {
+          path: "/construction",
+          name: "施工管理"
         }
-      },
-      logout () {
-        this.$store.dispatch('FedLogOut').then(() => {
-          location.reload()// In order to re-instantiate the vue-router object to avoid bugs
-        })
-      },
-      activeChange(val){
-        this.activeColor=val
-      },
-      change(val){
-        this.themecolor=val
-      }
+      ],
+      themecolor: "#409EFF",
+      activeColor: ""
+    };
+  },
+  components: {
+    Logo
+  },
+  created() {
+    var path = this.$route.path.split("/")[1];
+    if (path == "") {
+      this.activePath = 0;
+    } else if (path == "design") {
+      this.activePath = 1;
+    } else {
+      this.activePath = 2;
     }
-  }
+  },
+  methods: {
+    activeClick(index) {
+      this.activePath = index;
+      if (index == 2) {
+        this.$store.state.linkList = [
+          {
+            icon: "icon-xiangmuzonglan",
+            link: "/construction",
+            title: "项目总览"
+          }
+        ];
+      }
+    },
+    logout() {
+      this.$store.dispatch("FedLogOut").then(() => {
+        location.reload(); // In order to re-instantiate the vue-router object to avoid bugs
+      });
+    },
+    activeChange(val) {
+      this.activeColor = val;
+    },
+    change(val) {
+      this.themecolor = val;
+    },
+    showSide:function(){
+      this.$store.dispatch('showSideBar')
+    },
+  },
+};
 </script>
 <style scoped>
-  .login {
-    font-size: 14px;
-    color: #fff;
-    display: flex;
-  }
+.login {
+  font-size: 14px;
+  color: #fff;
+  display: flex;
+}
 
-  .bheader {
-    padding: 0 40px 0 20px;
-    width: 100%;
-    height: 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(45deg, #4b7dff, #05b4fb);
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 5;
-  }
+.bheader {
+  padding: 0 40px 0 20px;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(45deg, #4b7dff, #05b4fb);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5;
+}
 
-  div.cur {
-    font-weight: bold;
-  }
+div.cur {
+  font-weight: bold;
+}
 
-  .headerbox {
-    height: 60px;
-    /*border-radius: 50%;*/
-    line-height: 40px;
-    padding: 10px;
-    text-align: center;
-    cursor: pointer;
-    /*box-shadow: 0 5px 8px rgba(0,0,0,.125);*/
-    color: #fff;
-    font-size: 16px;
-  }
+.headerbox {
+  height: 60px;
+  /*border-radius: 50%;*/
+  line-height: 40px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  /*box-shadow: 0 5px 8px rgba(0,0,0,.125);*/
+  color: #fff;
+  font-size: 16px;
+}
 
-  .headerbox:hover {
-    font-weight: bold;
-  }
+.headerbox:hover {
+  font-weight: bold;
+}
 
-  .user_message_header {
-    width: 100%;
-    height: 120px;
-  }
+.user_message_header {
+  width: 100%;
+  height: 120px;
+}
 
-  .el-badge__content {
-    height: 14px;
-    line-height: 14px;
-    font-size: 12px;
-  }
+.el-badge__content {
+  height: 14px;
+  line-height: 14px;
+  font-size: 12px;
+}
 
-  .mune {
-    display: flex;
-  }
+.mune {
+  display: flex;
+}
 
-  .active {
-    font-weight: bold
-  }
+.active {
+  font-weight: bold;
+}
 
-  .avatar {
-    width: 38px;
-    height: 38px;
-    margin: 8px;
-    border-radius: 50%;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, .125);
-  }
+.avatar {
+  width: 38px;
+  height: 38px;
+  margin: 8px;
+  border-radius: 50%;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.rightbell {
+  margin: 10px 5px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
 </style>

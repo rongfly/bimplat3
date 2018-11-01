@@ -9,5 +9,6 @@ const getters = {
   telephone: state => state.user.userInfo.telephone,
   userno: state => state.user.userInfo.userno,
   roles: state => state.user.userInfo.roles,
+  isShowMethod: state => state.tools.isShow
 }
 export default getters
