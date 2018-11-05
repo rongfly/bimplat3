@@ -198,6 +198,14 @@ const router = new Router({
         title: '注册'
       }
     },
+    {
+      path: '/test',
+      name: 'test',
+      component: () => import('../test/test.vue'),
+      meta: {
+        title: 'test'
+      }
+    },
   ]
 })
 export default router

@@ -11,14 +11,14 @@
           class="demo-ruleForm userinfo_box"
         >
           <el-form-item label="头像：" prop="avatar" style="height: 100px;line-height: 100px">
-            <img :src="userInfo.avatar" alt="" class="userinfo_uptx">
+            <img :src="userInfo.headImage" alt="" class="userinfo_uptx">
           </el-form-item>
           <el-form-item label="名字：" prop="name">
             <el-input v-model="userInfo.name"></el-input>
             <div class="sadas"></div>
           </el-form-item>
-          <el-form-item label="部门：" prop="department">
-            <el-input v-model="userInfo.department"></el-input>
+          <el-form-item label="部门：" prop="orgname">
+            <el-input v-model="userInfo.orgname"></el-input>
           </el-form-item>
           <el-form-item label="职位：" prop="job">
             <el-input v-model="userInfo.job"></el-input>
@@ -93,7 +93,6 @@
 
 <script>
   let id = 1000
-  import { mapState } from 'vuex'
   import dataJson from './data.json'
 
   export default {
@@ -258,7 +257,7 @@
     },
     computed: {
       userInfo () {
-        return this.$store.state.user.userInfo
+        return this.$store.getters.userInfo
       }
     }
   }

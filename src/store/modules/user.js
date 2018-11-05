@@ -7,51 +7,19 @@ const user = {
     status: '',
     code: '',
     token: getToken(),
-    userInfo:{
-      name: '',
-      avatar: '',
-      department: '',
-      job: '',
-      telephone: '',
-      userno:'',
-      roles:[]
-    }
+    userInfo:{},
+    roles:[]
   },
 
   mutations: {
-    SET_CODE: (state, code) => {
-      state.code = code
+    SET_ROLES: (state, roles) => {
+      state.roles = roles
     },
     SET_TOKEN: (state, token) => {
       state.token = token
     },
-    SET_NAME: (state, name) => {
-      state.userInfo.name = name
-
-    },
-    SET_AVATAR: (state, avatar) => {
-      state.userInfo.avatar = avatar
-    },
-    SET_ORGNAME: (state, orgname) => {
-      state.userInfo.department = orgname
-    },
-    SET_JOB: (state, job) => {
-      state.userInfo.job = job
-    },
-    SET_TELEPHONE: (state, telephone) => {
-      state.userInfo.telephone = telephone
-    },
-    SET_USERNO: (state, userno) => {
-      state.userInfo.userno = userno
-    },
-    SET_SETTING: (state, setting) => {
-      state.setting = setting
-    },
-    SET_STATUS: (state, status) => {
-      state.status = status
-    },
-    SET_ROLES: (state, roles) => {
-      state.userInfo.roles = roles
+    SET_USERINFO: (state, userinfo) => {
+      state.userInfo = userinfo
     },
   },
 
@@ -97,14 +65,8 @@ const user = {
           // } else {
           //   reject('getInfo: roles must be a non-null array !')
           // }
-
-          commit('SET_NAME', data.name)
-          commit('SET_AVATAR', data.headImage)
-          commit('SET_ORGNAME', data.orgname)
-          commit('SET_JOB', data.job)
-          commit('SET_TELEPHONE', data.telephone)
-          commit('SET_USERNO', data.userno)
           commit('SET_ROLES', ['admin'])
+          commit('SET_USERINFO', data)
           resolve(response)
         }).catch(error => {
           reject(error)
