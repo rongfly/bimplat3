@@ -8,7 +8,9 @@ const user = {
     code: '',
     token: getToken(),
     userInfo:{},
-    roles:[]
+    roles:[],
+    menus: [],
+    permissions: [],
   },
 
   mutations: {
@@ -20,6 +22,12 @@ const user = {
     },
     SET_USERINFO: (state, userinfo) => {
       state.userInfo = userinfo
+    },
+    SET_MENUS: (state, menus) => {
+      state.menus = menus
+    },
+    SET_PERMISSIONS: (state, permissions) => {
+      state.permissions = permissions
     },
   },
 
@@ -67,6 +75,8 @@ const user = {
           // }
           commit('SET_ROLES', ['admin'])
           commit('SET_USERINFO', data)
+          commit('SET_MENUS', [1])
+          commit('SET_PERMISSIONS', [1])
           resolve(response)
         }).catch(error => {
           reject(error)
@@ -91,9 +101,9 @@ const user = {
     // },
 
     // 登出
-    LogOut({ commit, state }) {
+    LogOut({ commit }) {
       return new Promise((resolve, reject) => {
-        request.logout(state.token).then(() => {
+        request.logOut().then(() => {
           commit('SET_TOKEN', '')
           commit('SET_ROLES', [])
           removeToken()

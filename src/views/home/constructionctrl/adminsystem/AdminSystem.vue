@@ -13,9 +13,8 @@
             width="180">
             <template slot-scope="scope">
               <div class="name_list">
-                <img v-if="scope.row.headImage" :src="scope.row.headImage" alt=""
+                <img :src="scope.row.headImage" alt=""
                      class="name_list_avatar">
-                <img v-else src="@/assets/img/avatar.png" alt="" class="name_list_avatar">
                 <span class="name_list_cname">{{scope.row.name}}</span>
               </div>
             </template>

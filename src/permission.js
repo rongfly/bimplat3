@@ -7,9 +7,9 @@ import { getToken } from '@/utils/cookies' // getToken from cookie
 
 NProgress.configure({showSpinner: false})// NProgress Configuration
 
-// permission judge function
+// permission.js judge function
 function hasPermission (roles, permissionRoles) {
-  if (roles.indexOf('adminsystem') >= 0) return true // adminsystem permission passed directly
+  if (roles.indexOf('adminsystem') >= 0) return true // adminsystem permission.js passed directly
   if (!permissionRoles) return true
   return roles.some(role => permissionRoles.indexOf(role) >= 0)
 }
@@ -29,6 +29,7 @@ router.beforeEach((to, from, next) => {
     }
     else {
       next()
+      console.log(store.getters.roles.length)
       if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
         store.dispatch('GetUserInfo').then(res => { // 拉取user_info
           console.log(res)

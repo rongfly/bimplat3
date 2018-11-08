@@ -64,10 +64,9 @@
         }
         // return that.request.login(data)
         return that.$store.dispatch('LoginByUsername', data).then(() => {
-          console.log("login.vue")
           that.$router.push({path: '/'})
-        }).catch(() => {
-          console.log("login.error")
+        }).catch(err => {
+          this.$message.error(err);
         })
       }
     },

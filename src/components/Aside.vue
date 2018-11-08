@@ -95,15 +95,14 @@
         console.log(key, keyPath)
       },
       selectLink (n) {
-        console.log(n)
-        // this.$store.state.linkList.push(n)
         console.log(arrayQC(this.$store.state.linkList, n))
-        // this.$store.state.linkList=arrayQC(this.$store.state.linkList,n)
-        // this.$store.state.linkList.push(n)
       }
     },
     computed: {
       route () {
+        if(this.$route.path.indexOf("/construction/officeadmin/") != -1 ){
+          return "/construction/officeadmin"
+        }
         return this.$route.path
       }
     },

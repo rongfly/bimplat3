@@ -2,6 +2,7 @@
 
 export default {
   login: '/bimplatform/v1/api/tokens/login', // 登录
+  logout: '/bimplatform/v1/api/tokens/logout', // 退出登录
   sendMsg: '/bimplatform/v1/api/sms/hello1', // 验证token
   // list_zx: '/v1/api/coopes/list_zx', // 获取协作列表(我执行的)
   // list_zx: '/bimplatform/v1/api/coopes/list_cc', // 获取协作列表(我执行的)

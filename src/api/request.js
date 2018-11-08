@@ -12,6 +12,12 @@ export default {
       data: qs.stringify(data)
     })
   },
+  logOut () {
+    return axios({
+      url: api.logout,
+      method: 'delete',
+    })
+  },
   // 获取个人信息
   getUserInfo (data) {
     return axios({

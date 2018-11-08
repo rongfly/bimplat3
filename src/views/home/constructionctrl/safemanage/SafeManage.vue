@@ -172,9 +172,8 @@
               <p>{{kanData.creater_name}}</p>
               <p>{{kanData.creater_job}}</p>
             </div>
-            <img v-if="kanData.creater_headimage!=''" :src="kanData.creater_headimage" alt=""
+            <img :src="kanData.creater_headimage" alt=""
                  class="name_list_avatar">
-            <img v-else src="@/assets/img/avatar.png" alt="" class="name_list_avatar">
           </el-tooltip>
         </el-form-item>
         <el-form-item label="责任人">
@@ -185,10 +184,9 @@
               <p>{{kanData.responsible_name}}</p>
               <p>{{kanData.responsible_job}}</p>
             </div>
-            <img v-if="kanData.responsible_headimage!=''" :src="kanData.responsible_headimage"
+            <img :src="kanData.responsible_headimage"
                  alt=""
                  class="name_list_avatar">
-            <img v-else src="@/assets/img/avatar.png" alt="" class="name_list_avatar">
           </el-tooltip>
         </el-form-item>
         <el-form-item label="协作调整文字">
@@ -262,7 +260,6 @@
   </div>
 </template>
 <script>
-
   export default {
     name: 'anquan',
     data () {

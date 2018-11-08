@@ -1,7 +1,24 @@
 <template>
-    <div class="test">
-        <el-button @click="showdata">show</el-button>
-        <gantt class="left-container" :tasks="tasks" ref="showgantt"></gantt>
+    <div class="container">
+        <div class="right-container">
+            <div class="gantt-selected-info">
+                <div v-if="selectedTask">
+                    <h2>{{selectedTask.text}}</h2>
+                    <span><b>ID: </b>{{selectedTask.id}}</span><br/>
+                    <span><b>Progress: </b>{{selectedTask.progress|toPercent}}%</span><br/>
+                    <span><b>Start Date: </b>{{selectedTask.start_date|niceDate}}</span><br/>
+                    <span><b>End Date: </b>{{selectedTask.end_date|niceDate}}</span><br/>
+                </div>
+                <div v-else class="select-task-prompt">
+                    <h2>Click any task</h2>
+                </div>
+            </div>
+            <ul class="gantt-messages">
+                <li class="gantt-message" v-for="message in messages">{{message}}</li>
+            </ul>
+            <el-button @click="showTask">查看</el-button>
+        </div>
+        <gantt class="left-container" :tasks="tasks" @task-updated="logTaskUpdate" @link-updated="logLinkUpdate" @task-selected="selectTask"></gantt>
     </div>
 </template>
 
@@ -214,18 +231,58 @@ export default {
           }
         ],
         links: [{ id: 1, source: 4, target: 2, type: "3" }]
-      }
+      },
+      selectedTask: null,
+      messages: []
     };
   },
+  filters: {
+    toPercent (val) {
+      if(!val) return '0'
+      return Math.round((+val) * 100)
+    },
+    niceDate (obj){
+      return `${obj.getFullYear()} / ${obj.getMonth() + 1} / ${obj.getDate()}`
+    }
+  },
   methods: {
-    showdata() {
-      this.$refs.showgantt.showdata(); 
+    showTask(){
+      console.log(this.tasks)
+    },
+    selectTask (task) {
+      console.log(task)
+      this.selectedTask = task
+    },
+
+    addMessage (message) {
+      console.log(message)
+      this.messages.unshift(message)
+      if(this.messages.length > 40) {
+        this.messages.pop()
+      }
+    },
+    logTaskUpdate (id, mode, task) {
+      console.log(task)
+      // this.tasks.data.push(task)
+      let text = (task && task.text ? ` (${task.text})`: '')
+      let message = `Task ${mode}: ${id} ${text}`
+      this.addMessage(message)
+    },
+    logLinkUpdate (id, mode, link) {
+      // this.tasks.links.push(link)
+      console.log(this.tasks)
+      let message = `Link ${mode}: ${id}`
+      if(link){
+        console.log(link)
+        message += ` ( source: ${link.source}, target: ${link.target} )`
+      }
+      this.addMessage(message)
     }
   }
 };
 </script>
 <style lang="scss" scoped>
-.test {
+.container {
   height: 100vh;
 }
 .left-container {
